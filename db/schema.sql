@@ -1,3 +1,5 @@
+CREATE DATABASE contact_list;
+
 CREATE TABLE categories(
   id serial primary key,
   name varchar(255)
