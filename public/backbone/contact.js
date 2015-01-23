@@ -1,5 +1,8 @@
+// recall or define the var holding everything
 var ContactList = ContactList || { Models: {}, Collections: {}, Views: {} };
 
+// string template of the view
+// should this be stored as a jquery object instead?
 var ContactViewTemplate = [
   "<image src=<%= picture %> />",
   "<div>",
@@ -8,7 +11,7 @@ var ContactViewTemplate = [
   "<p><%= phone_number %></p>",
   "<p><%= address %></p>",
   "</div>"
-].join;
+].join();
 
 // Define the contact model
 // a backbone model's only job is to store data.
@@ -24,11 +27,16 @@ ContactList.Models.Contact = Backbone.Model.extend(
   } //hash to define contact end
 );//defining the contact model
 
+//define the contact collection
+
+ContactList.Collections.Contacts = Bacbone.Collection.extend({
+  model: ContactList.Models.Contact
+});
 
 // define the contact view
 // have all the mechanics in the view
 
-ContactList.Views.ContactView = Backbone.View.extend(
+ContactList.Views.Contact = Backbone.View.extend(
   { //hash to define the contact view start
     initialize: function(){
       //re-render upon change
@@ -38,7 +46,7 @@ ContactList.Views.ContactView = Backbone.View.extend(
     },//initialize
     tagName: 'div',
     template: _.template(
-      ContactViewTemplate
+      $(ContactViewTemplate).html()
     ),//template
     events: {
       'dblclick' : 'renderEditForm' //double click the view to edit the form
@@ -52,11 +60,12 @@ ContactList.Views.ContactView = Backbone.View.extend(
       return this;
     },//render
     renderEditForm: function(){
+      // debugger;
       //need a template to render the form? or can I dynamic it?
       self.mode.set({
         //hash of values to save to model
       });
-      self.model.save();//bothers me that this is linear in async
+      // self.model.save(); //UNCOMMENT THIS AFTER EDITING IS DONE
     }, //render edit form
     destroyme: function(){
       this.model.destroy();
@@ -64,7 +73,7 @@ ContactList.Views.ContactView = Backbone.View.extend(
   } //hash to define the contact view end
 );//defining the contact view
 
-contactList.Views.ContactList = Backbone.View.edtend({
+contactList.Views.ContactList = Backbone.View.extend({
   initialize: function(){
     this.listenTo(this.collection, 'all', this.render);
   },//initialize
@@ -73,7 +82,7 @@ contactList.Views.ContactList = Backbone.View.edtend({
     this.$el.empty();
     _.each( this.collection.models,
       function(contact){
-        var contactView = new ContactView({model: contact});
+        var contactView = new ContactList.Views.Contact({model: contact});
         self.$el.append( contactView.render().el );
       }//function, render action per contact
     );//each
