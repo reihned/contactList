@@ -11,7 +11,7 @@ var ContactViewTemplate = [
   "<p><%= phone_number %></p>",
   "<p><%= address %></p>",
   "</div>"
-].join();
+].join("");
 
 // Define the contact model
 // a backbone model's only job is to store data.
@@ -29,8 +29,9 @@ ContactList.Models.Contact = Backbone.Model.extend(
 
 //define the contact collection
 
-ContactList.Collections.Contacts = Bacbone.Collection.extend({
-  model: ContactList.Models.Contact
+ContactList.Collections.Contacts = Backbone.Collection.extend({
+  model:  ContactList.Models.Contact,
+  url:    "/contacts",
 });
 
 // define the contact view
@@ -73,7 +74,7 @@ ContactList.Views.Contact = Backbone.View.extend(
   } //hash to define the contact view end
 );//defining the contact view
 
-contactList.Views.ContactList = Backbone.View.extend({
+ContactList.Views.Contacts = Backbone.View.extend({
   initialize: function(){
     this.listenTo(this.collection, 'all', this.render);
   },//initialize
@@ -86,5 +87,6 @@ contactList.Views.ContactList = Backbone.View.extend({
         self.$el.append( contactView.render().el );
       }//function, render action per contact
     );//each
+    return this;
   }//render
 });// defining contact list view
