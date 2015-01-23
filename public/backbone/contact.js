@@ -46,9 +46,7 @@ ContactList.Views.Contact = Backbone.View.extend(
       this.listenTo( this.model, "destroy", this.remove );
     },//initialize
     tagName: 'div',
-    template: _.template(
-      $(ContactViewTemplate).html()
-    ),//template
+    template: _.template(ContactViewTemplate),//template
     events: {
       'dblclick' : 'renderEditForm' //double click the view to edit the form
     },//events
@@ -76,9 +74,10 @@ ContactList.Views.Contact = Backbone.View.extend(
 
 ContactList.Views.Contacts = Backbone.View.extend({
   initialize: function(){
-    this.listenTo(this.collection, 'all', this.render);
+    this.listenTo(this.collection, 'reset', this.render);
+    // this.collection.fetch({reset: true});
   },//initialize
-  render: function(){
+  render: function() {
     var self = this;
     this.$el.empty();
     _.each( this.collection.models,

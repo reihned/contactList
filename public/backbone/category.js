@@ -31,19 +31,19 @@ ContactList.Collections.Categories = Backbone.Collection.extend({
 // define the category view
 ContactList.Views.Category = Backbone.View.extend({
   initialize: function(){
-    this.listenTo( this.model, 'all', this.render );
   }, //init
   tagName: 'div',
-  template: _.template($(CategoryViewTemplate).html()),
+  template: _.template(CategoryViewTemplate),
   events: {},
   render: function(){
     this.$el.empty();
     this.$el.html( this.template( this.model.attributes ) );
 
     var contactsView = new ContactList.Views.Contacts({
-      collection: this.model.get('contacts'),
+      collection: ),
       el: this.$el.find('.contacts')
     });
+
     contactsView.render();
 
     return this;
@@ -55,11 +55,12 @@ ContactList.Views.Category = Backbone.View.extend({
 
 ContactList.Views.Categories = Backbone.View.extend({
   initialize: function(){
-    this.listenTo(this.collection, 'all', this.render);
+    this.listenTo(this.collection, 'reset', this.render);
   },//init
   render: function(){
     var self = this;
     this.$el.empty();
+
     _.each(this.collection.models, function(category){
       var categoryView = new ContactList.Views.Category({ model: category });
       self.$el.append( categoryView.render().el );
