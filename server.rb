@@ -41,7 +41,7 @@ end
 delete("/categories/:id") do
   category = Category.find(params[:id])
   category.destroy
-  
+
   category.to_json
 end
 
@@ -50,7 +50,7 @@ get("/contacts") do
 end
 
 get("/contacts/:id") do
-  Contact.find_by(params[:id]).to_json
+  Contact.find_by(id: params[:id]).to_json
 end
 
 post("/contacts") do
