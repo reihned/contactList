@@ -15,9 +15,16 @@ var CategoryViewTemplate = [
 // define the category model
 ContactList.Models.Category = Backbone.Model.extend({
   initialize: function(){
-    this.set('contacts', new ContactList.Collections.Contacts());
+    contactsAll = new ContactList.Collections.Contacts();
+    self = this;
+    this.set('contacts',
+      contactsAll.filter(contactsAll, function(contact){
+          return contact.category_id == self.id;
+      })  //filter
+    ); //set
   },//initialize
   defaults: {
+    // id
     name: "Category"
   }
 }); // define the category model end
@@ -35,12 +42,12 @@ ContactList.Views.Category = Backbone.View.extend({
   tagName: 'div',
   template: _.template(CategoryViewTemplate),
   events: {},
-  render: function(){
+  render: function(collectionFiltered){
     this.$el.empty();
     this.$el.html( this.template( this.model.attributes ) );
 
     var contactsView = new ContactList.Views.Contacts({
-      collection: ),
+      collection: collectionFiltered,
       el: this.$el.find('.contacts')
     });
 
@@ -63,6 +70,7 @@ ContactList.Views.Categories = Backbone.View.extend({
 
     _.each(this.collection.models, function(category){
       var categoryView = new ContactList.Views.Category({ model: category });
+
       self.$el.append( categoryView.render().el );
     });
     return this;

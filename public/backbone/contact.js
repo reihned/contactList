@@ -22,7 +22,13 @@ ContactList.Models.Contact = Backbone.Model.extend(
       //none?
     },
     defaults:{
-      //none?
+      // id serial primary key,
+      // name varchar(255),
+      // age integer,
+      // address varchar(255),
+      // phone_number varchar(255),
+      // picture text,
+      // category_id integer
     }
   } //hash to define contact end
 );//defining the contact model
