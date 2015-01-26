@@ -5,16 +5,20 @@ var ContactList = ContactList || { Models: {}, Collections: {}, Views: {} };
 var CategoryViewTemplate = [
   "<div>",
     "<h3><%= name %></h3>",
-    "<div class='contacts'>",
+    "<div class='contacts' id='<%= id %>'>",
     "</div>",
   "</div>"
 ].join("");
 
 //define the category edit/delete template
-
+// var allContacts = new ContactList.Collections.Contacts();
 // define the category model
 ContactList.Models.Category = Backbone.Model.extend({
   initialize: function(){
+    // var allContacts = ;
+    // debugger;
+    // allContacts.fetch({reset: true});
+    var cat_id = this.attributes.id;
     this.set('contacts', new ContactList.Collections.Contacts());
   },//initialize
   defaults: {
@@ -34,7 +38,7 @@ ContactList.Views.Category = Backbone.View.extend({
     this.listenTo( this.model, 'all', this.render );
   }, //init
   tagName: 'div',
-  template: _.template($(CategoryViewTemplate).html()),
+  template: _.template(CategoryViewTemplate),
   events: {},
   render: function(){
     this.$el.empty();
@@ -46,6 +50,7 @@ ContactList.Views.Category = Backbone.View.extend({
     });
     contactsView.render();
 
+
     return this;
   } //render
 
@@ -55,7 +60,7 @@ ContactList.Views.Category = Backbone.View.extend({
 
 ContactList.Views.Categories = Backbone.View.extend({
   initialize: function(){
-    this.listenTo(this.collection, 'all', this.render);
+    this.listenTo(this.collection, 'reset', this.render);
   },//init
   render: function(){
     var self = this;

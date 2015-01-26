@@ -5,7 +5,7 @@ $(
       collection: categories,
       el: $("#main")
     });
-  
-    categories.fetch();
+
+    categories.fetch({reset: true});
   }//function to run when ready
 );//jquery ready

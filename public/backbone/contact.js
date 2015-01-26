@@ -30,8 +30,8 @@ ContactList.Models.Contact = Backbone.Model.extend(
 //define the contact collection
 
 ContactList.Collections.Contacts = Backbone.Collection.extend({
-  model:  ContactList.Models.Contact,
-  url:    "/contacts",
+  model:  ContactList.Models.Contact//,
+  // url:    "/contacts"
 });
 
 // define the contact view
@@ -46,9 +46,7 @@ ContactList.Views.Contact = Backbone.View.extend(
       this.listenTo( this.model, "destroy", this.remove );
     },//initialize
     tagName: 'div',
-    template: _.template(
-      $(ContactViewTemplate).html()
-    ),//template
+    template: _.template( ContactViewTemplate ),//template
     events: {
       'dblclick' : 'renderEditForm' //double click the view to edit the form
     },//events
@@ -76,11 +74,14 @@ ContactList.Views.Contact = Backbone.View.extend(
 
 ContactList.Views.Contacts = Backbone.View.extend({
   initialize: function(){
+    // debugger;
+    this.collection.fetch();
     this.listenTo(this.collection, 'all', this.render);
   },//initialize
   render: function(){
     var self = this;
     this.$el.empty();
+    // debugger;
     _.each( this.collection.models,
       function(contact){
         var contactView = new ContactList.Views.Contact({model: contact});
