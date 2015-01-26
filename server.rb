@@ -21,6 +21,12 @@ get("/categories") do
   Category.all.to_json
 end
 
+
+get("/categories/:id/contacts") do
+  result = Contact.where(category_id: params[:id])
+  result.to_json
+end
+
 get("/categories/:id") do
   Category.find(params[:id]).to_json(:include => :contacts)
 end

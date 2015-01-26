@@ -15,11 +15,12 @@ var CategoryViewTemplate = [
 // define the category model
 ContactList.Models.Category = Backbone.Model.extend({
   initialize: function(){
-    // var allContacts = ;
+    var allContacts = new ContactList.Collections.Contacts();
     // debugger;
-    // allContacts.fetch({reset: true});
     var cat_id = this.attributes.id;
-    this.set('contacts', new ContactList.Collections.Contacts());
+    allContacts.url = '/categories/' + cat_id + '/contacts';
+    // allContacts.fetch({reset: true});
+    this.set('contacts', allContacts);
   },//initialize
   defaults: {
     name: "Category"
