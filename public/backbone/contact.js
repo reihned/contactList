@@ -22,13 +22,7 @@ ContactList.Models.Contact = Backbone.Model.extend(
       //none?
     },
     defaults:{
-      // id serial primary key,
-      // name varchar(255),
-      // age integer,
-      // address varchar(255),
-      // phone_number varchar(255),
-      // picture text,
-      // category_id integer
+      //none?
     }
   } //hash to define contact end
 );//defining the contact model
@@ -52,7 +46,9 @@ ContactList.Views.Contact = Backbone.View.extend(
       this.listenTo( this.model, "destroy", this.remove );
     },//initialize
     tagName: 'div',
-    template: _.template(ContactViewTemplate),//template
+    template: _.template(
+      $(ContactViewTemplate).html()
+    ),//template
     events: {
       'dblclick' : 'renderEditForm' //double click the view to edit the form
     },//events
@@ -80,10 +76,9 @@ ContactList.Views.Contact = Backbone.View.extend(
 
 ContactList.Views.Contacts = Backbone.View.extend({
   initialize: function(){
-    this.listenTo(this.collection, 'reset', this.render);
-    // this.collection.fetch({reset: true});
+    this.listenTo(this.collection, 'all', this.render);
   },//initialize
-  render: function() {
+  render: function(){
     var self = this;
     this.$el.empty();
     _.each( this.collection.models,
