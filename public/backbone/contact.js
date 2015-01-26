@@ -13,6 +13,13 @@ var ContactViewTemplate = [
   "</div>"
 ].join("");
 
+var ContactEditTemplate = [
+  "<image src=<%= picture %> />",
+  "<form class='editContact'>",
+  "<button name='submit'>Submit</button>",
+  "</form>"
+].join("");
+
 // Define the contact model
 // a backbone model's only job is to store data.
 
@@ -53,17 +60,25 @@ ContactList.Views.Contact = Backbone.View.extend(
     render: function(){
       this.$el.empty();
 
-      //using a template to render the form, because of the image.... wait...
+      // using a template to render the form, because of the image.... wait...
       this.$el.html(this.template(this.model.attributes));
-
+      // iterate throught the attributes to add form elements
+      // form class = editContact
       return this;
     },//render
     renderEditForm: function(){
       // debugger;
+      self = this;
+      this.$el.empty();
+      var editTemplate = _.template(ContactEditTemplate);
+      editTemplate.(this.model.attributes);
+
+      this.$el.html(editTemplate);
+      // debugger;
       //need a template to render the form? or can I dynamic it?
-      self.mode.set({
+      // self.mode.set({
         //hash of values to save to model
-      });
+      // });
       // self.model.save(); //UNCOMMENT THIS AFTER EDITING IS DONE
     }, //render edit form
     destroyme: function(){
