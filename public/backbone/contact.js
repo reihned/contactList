@@ -16,7 +16,7 @@ var ContactViewTemplate = [
 var ContactEditTemplate = [
   "<image src=<%= picture %> />",
   "<form class='editContact'>",
-  "<button name='save'>Save</button>",
+  // "<button name='save'>Save</button>",
   "</form>"
 ].join("");
 
@@ -56,7 +56,8 @@ ContactList.Views.Contact = Backbone.View.extend(
     template: _.template( ContactViewTemplate ),//template
     events: {
       'dblclick' : 'renderEditForm', //double click the view to edit the form
-      'click button[name="save"]': 'updateme'
+      // 'click button[name="save"]': 'updateme'
+      'submit' : 'updateme'
     },//events
     render: function(){
       this.$el.empty();
@@ -85,18 +86,28 @@ ContactList.Views.Contact = Backbone.View.extend(
         if(pair[0].indexOf("id") == -1){
           var $par = $('<p>').text(pair[0]);
           $('<input>').attr({
+            class: pair[0],
             name: pair[0],
             value: pair[1]
           }).appendTo($par);
           $par.appendTo($form);
         }//if
       });//for each
+      $form.append("<input type='submit' value='submit' name='submit' />");
 
     }, //render edit form
-    updateme: function(){
-      this.model.set({
+    updateme: function(e){
+      e.preventDefault();
 
-      });
+      var valuesRaw = this.$el.find('input');
+      var values = {};
+
+      for(var i = 0; i < valuesRaw.length; i++){
+        values[$(valuesRaw[i]).attr('class')] = $(valuesRaw[i]).val();
+      }//for that constructs the object to set
+
+      this.model.set(values);
+      this.model.save();
     },
     destroyme: function(){
       this.model.destroy();
