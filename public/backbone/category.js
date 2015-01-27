@@ -19,7 +19,7 @@ ContactList.Models.Category = Backbone.Model.extend({
     var allContacts = new ContactList.Collections.Contacts();
     // debugger;
     var cat_id = this.attributes.id;
-    allContacts.url = '/categories/' + cat_id + '/contacts';
+    // allContacts.url = '/categories/' + cat_id + '/contacts';
     // allContacts.fetch({reset: true});
     this.set('contacts', allContacts);
   },//initialize
@@ -48,7 +48,7 @@ ContactList.Views.Category = Backbone.View.extend({
     this.$el.empty();
     this.$el.html( this.template( this.model.attributes ) );
 
-    var contactsView = new ContactList.Views.Contacts({
+    var contactsView = new ContactList.Views.FilteredContacts({
       collection: this.model.get('contacts'),
       el: this.$el.find('.contacts')
     });

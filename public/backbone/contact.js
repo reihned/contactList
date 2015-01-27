@@ -37,8 +37,8 @@ ContactList.Models.Contact = Backbone.Model.extend(
 //define the contact collection
 
 ContactList.Collections.Contacts = Backbone.Collection.extend({
-  model:  ContactList.Models.Contact//,
-  // url:    "/contacts"
+  model:  ContactList.Models.Contact,
+  url:    "/contacts"
 });
 
 // define the contact view
@@ -123,3 +123,46 @@ ContactList.Views.Contacts = Backbone.View.extend({
     return this;
   }//render
 });// defining contact list view
+
+//defining a filtered view
+ContactList.Views.FilteredContacts = Backbone.View.extend({
+  initialize: function(){
+    // debugger;
+    this.collection.fetch();
+    this.listenTo(this.collection, 'all', this.runFilter);
+  },//initialize
+
+  runFilter: function(){
+    // debugger;
+
+    this.filter = {
+      category_id: parseInt(this.$el.attr('id'), 10)
+    };
+
+    this.render();
+  },
+
+  render: function(){
+    var self = this;
+    this.$el.empty();
+
+    // get the filtered list from the collection
+    var filteredList = this.collection.where(this.filter);
+
+    // debugger;
+
+    _.each( filteredList,
+      function(contact){
+        var contactView = new ContactList.Views.Contact({model: contact});
+        self.$el.append( contactView.render().el );
+      }//function, render action per contact
+    );//each
+
+    return this;
+  }
+});
+
+
+
+
+//
