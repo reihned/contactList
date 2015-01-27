@@ -10,6 +10,7 @@ var CategoryViewTemplate = [
   "</div>"
 ].join("");
 
+
 //define the category edit/delete template
 // var allContacts = new ContactList.Collections.Contacts();
 // define the category model
@@ -27,11 +28,13 @@ ContactList.Models.Category = Backbone.Model.extend({
   }
 }); // define the category model end
 
+
 // define the category collection
 ContactList.Collections.Categories = Backbone.Collection.extend({
   model:  ContactList.Models.Category,
   url:    '/categories'
 });
+
 
 // define the category view
 ContactList.Views.Category = Backbone.View.extend({
@@ -57,8 +60,8 @@ ContactList.Views.Category = Backbone.View.extend({
 
 });//cat view
 
-// define the category list view
 
+// define the category list view
 ContactList.Views.Categories = Backbone.View.extend({
   initialize: function(){
     this.listenTo(this.collection, 'reset', this.render);

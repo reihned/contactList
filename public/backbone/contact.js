@@ -16,7 +16,7 @@ var ContactViewTemplate = [
 var ContactEditTemplate = [
   "<image src=<%= picture %> />",
   "<form class='editContact'>",
-  "<button name='submit'>Submit</button>",
+  "<button name='save'>Save</button>",
   "</form>"
 ].join("");
 
@@ -55,7 +55,8 @@ ContactList.Views.Contact = Backbone.View.extend(
     tagName: 'div',
     template: _.template( ContactViewTemplate ),//template
     events: {
-      'dblclick' : 'renderEditForm' //double click the view to edit the form
+      'dblclick' : 'renderEditForm', //double click the view to edit the form
+      'click button[name="save"]': 'updateme'
     },//events
     render: function(){
       this.$el.empty();
@@ -71,16 +72,32 @@ ContactList.Views.Contact = Backbone.View.extend(
       self = this;
       this.$el.empty();
       var editTemplate = _.template(ContactEditTemplate);
-      editTemplate.(this.model.attributes);
 
-      this.$el.html(editTemplate);
       // debugger;
-      //need a template to render the form? or can I dynamic it?
-      // self.mode.set({
-        //hash of values to save to model
-      // });
-      // self.model.save(); //UNCOMMENT THIS AFTER EDITING IS DONE
+
+      this.$el.html(editTemplate(this.model.attributes));
+
+      var $form = $("form.editContact");
+
+      var pairs = this.model.pairs();
+
+      pairs.forEach( function(pair){
+        if(pair[0].indexOf("id") == -1){
+          var $par = $('<p>').text(pair[0]);
+          $('<input>').attr({
+            name: pair[0],
+            value: pair[1]
+          }).appendTo($par);
+          $par.appendTo($form);
+        }//if
+      });//for each
+
     }, //render edit form
+    updateme: function(){
+      this.model.set({
+
+      });
+    },
     destroyme: function(){
       this.model.destroy();
     }//destroyme
