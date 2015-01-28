@@ -10,7 +10,7 @@ $(
 
     // debugger;
 
-    var $contactCat = $('select#contactCat');
+    // var $contactCat = $('select#contactCat');
 
     //populate the options in the select
     // categories.each(function(model){
