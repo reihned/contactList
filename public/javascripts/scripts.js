@@ -17,6 +17,7 @@ $(
       e.preventDefault();
       var newContact = new ContactList.Models.Contact();
       console.log( $( this ).serialize() );
+      return false;
     });
 
   }//function to run when ready
