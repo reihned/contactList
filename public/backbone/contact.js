@@ -30,8 +30,8 @@ ContactList.Models.Contact = Backbone.Model.extend(
     },
     defaults:{
       //none?
-    },
-    url: '/contacts'
+    }
+    // url: '/contacts'
   } //hash to define contact end
 );//defining the contact model
 
@@ -57,7 +57,7 @@ ContactList.Views.Contact = Backbone.View.extend(
     template: _.template( ContactViewTemplate ),//template
     events: {
       'dblclick' : 'renderEditForm', //double click the view to edit the form
-      // 'click button[name="save"]': 'updateme'
+      "click button[name='remove']": 'destroyme',
       'submit' : 'updateme'
     },//events
     render: function(){
@@ -95,6 +95,7 @@ ContactList.Views.Contact = Backbone.View.extend(
         }//if
       });//for each
       $form.append("<input type='submit' value='submit' name='submit' />");
+      $form.append("<button name='remove'>remove</button>");
 
     }, //render edit form
     updateme: function(e){
@@ -110,7 +111,8 @@ ContactList.Views.Contact = Backbone.View.extend(
       this.model.set(values);
       this.model.save();
     },
-    destroyme: function(){
+    destroyme: function(e){
+      e.preventDefault();
       this.model.destroy();
     }//destroyme
   } //hash to define the contact view end

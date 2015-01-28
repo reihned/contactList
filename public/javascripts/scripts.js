@@ -40,7 +40,7 @@ $(
       }//for newInfo
       newContact.set(newInfo);
 
-      // newContact.url();
+      newContact.url = '/contacts';
       newContact.save();
 
       return false;
