@@ -43,6 +43,8 @@ $(
       newContact.url = '/contacts';
       newContact.save();
 
+      categories.fetch({reset: true});
+
       return false;
     });
 
