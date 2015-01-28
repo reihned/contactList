@@ -30,7 +30,8 @@ ContactList.Models.Contact = Backbone.Model.extend(
     },
     defaults:{
       //none?
-    }
+    },
+    url: '/contacts'
   } //hash to define contact end
 );//defining the contact model
 

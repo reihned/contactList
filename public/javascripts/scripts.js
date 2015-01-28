@@ -28,12 +28,21 @@ $(
     var $formMain = $(newContactForm);
     $formMain.appendTo($divFormMain);
     $formMain.submit(function(e){
-      // e.preventDefault();
+      e.preventDefault();
       var newContact = new ContactList.Models.Contact();
       var $submitted = $(this).serializeArray();
-      //THE FOLLOWING IS AWESOME
-      newContact.set($submitted);
+      //THE FOLLOWING DOESNT WORK
+      // newContact.set($submitted);
+
+      var newInfo = {};
+      for(var i = 0; i < $submitted.length; i++ ){
+        newInfo[$submitted[i].name] = $submitted[i].value;
+      }//for newInfo
+      newContact.set(newInfo);
+
+      // newContact.url();
       newContact.save();
+
       return false;
     });
 
