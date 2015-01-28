@@ -1,3 +1,7 @@
+var ContactList = ContactList || { Models: {}, Collections: {}, Views: {} };
+
+
+
 $(
   function(){
     var categories = new ContactList.Collections.Categories();
@@ -8,14 +12,12 @@ $(
 
     categories.fetch({reset: true});
 
-    // debugger;
+    var $formMain = $('form#formMain');
+    $formMain.submit(function(e){
+      e.preventDefault();
+      var newContact = new ContactList.Models.Contact();
+      console.log( $( this ).serialize() );
+    });
 
-    // var $contactCat = $('select#contactCat');
-
-    //populate the options in the select
-    // categories.each(function(model){
-    //   debugger;
-    //   $('<option>').val(model.id).text(model.name);
-    // });
   }//function to run when ready
 );//jquery ready
