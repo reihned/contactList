@@ -19,8 +19,13 @@ ContactList.Models.Category = Backbone.Model.extend({
     var allContacts = new ContactList.Collections.Contacts();
     // debugger;
     var cat_id = this.attributes.id;
-    // allContacts.url = '/categories/' + cat_id + '/contacts';
-    // allContacts.fetch({reset: true});
+    var cat_name = this.attributes.name;
+
+    //popualte the select if this is initialized
+    var $contactCat = $('select#contactCat');
+    $('<option>').val(cat_id).text(cat_name).appendTo($contactCat);
+
+
     this.set('contacts', allContacts);
   },//initialize
   defaults: {
